@@ -5,6 +5,7 @@ import { parseCsv, toPlantInventory } from "./utils/parseCsv";
 
 // Reemplaza este valor por la URL pública CSV de la hoja de Google Sheets.
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6HJxuxL-EGPZ4pcGXbi0l2kDVT51oCpIdKHKUrDCehMdbNoP7zznVdigkIU9cO7Po8BCJs6wbKBkh/pub?output=csv";
+const INVENTORY_REFRESH_INTERVAL = 60_000;
 
 export default function App() {
   const [plants, setPlants] = useState([]);
@@ -60,14 +61,26 @@ export default function App() {
   useEffect(() => {
     const controller = new AbortController();
     loadInventory(controller.signal);
+    const refreshInterval = window.setInterval(() => {
+      loadInventory(controller.signal);
+    }, INVENTORY_REFRESH_INTERVAL);
 
-    return () => controller.abort();
+    return () => {
+      window.clearInterval(refreshInterval);
+      controller.abort();
+    };
   }, [loadInventory]);
 
   const categories = useMemo(
     () => [...new Set(plants.map((plant) => plant.category))].sort((a, b) => a.localeCompare(b)),
     [plants],
   );
+
+  useEffect(() => {
+    if (selectedCategory !== "Todas" && !categories.includes(selectedCategory)) {
+      setSelectedCategory("Todas");
+    }
+  }, [categories, selectedCategory]);
 
   const filteredPlants = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
