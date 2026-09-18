@@ -13,6 +13,7 @@ export default function App() {
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todas");
+  const [isContactMenuOpen, setIsContactMenuOpen] = useState(false);
 
   const loadInventory = useCallback(async (signal) => {
     setIsLoading(true);
@@ -104,13 +105,70 @@ export default function App() {
   return (
     <div className="min-h-screen bg-cream-50 text-slate-900">
       <header className="border-b border-leaf-100 bg-leaf-950 text-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-          <h1 className="max-w-2xl text-4xl font-black tracking-tight text-balance sm:text-5xl">
-            Vivero Julita
-          </h1>
-          <p className="mt-3 max-w-xl text-base leading-7 text-leaf-100 sm:text-lg">
-            Plantas disponibles para llenar tus espacios de verde.
-          </p>
+        <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 py-8 sm:flex-row sm:px-6 sm:py-12 lg:px-8">
+          <div>
+            <h1 className="max-w-2xl text-4xl font-black tracking-tight text-balance sm:text-5xl">
+              Vivero Julita
+            </h1>
+            <p className="mt-3 max-w-xl text-base leading-7 text-leaf-100 sm:text-lg">
+              Plantas disponibles para llenar tus espacios de verde.
+            </p>
+          </div>
+
+          <div className="relative shrink-0">
+            <button
+              aria-controls="contact-menu"
+              aria-expanded={isContactMenuOpen}
+              className="inline-flex items-center gap-2 rounded-xl border border-leaf-400/60 bg-leaf-800 px-4 py-3 text-sm font-bold text-white shadow-sm transition hover:border-leaf-200 hover:bg-leaf-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf-200"
+              onClick={() => setIsContactMenuOpen((isOpen) => !isOpen)}
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                className="size-5"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.7 9.7 0 0 1-4-.9L3 20l1.4-4A8.1 8.1 0 0 1 3 11.5a8.5 8.5 0 0 1 9-8.5 8.5 8.5 0 0 1 9 8.5Z" />
+                <path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" />
+              </svg>
+              <span>Consultas y encargos</span>
+            </button>
+
+            {isContactMenuOpen ? (
+              <div
+                className="absolute right-0 top-full z-10 mt-3 w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-leaf-100 bg-white p-4 text-slate-900 shadow-xl"
+                id="contact-menu"
+              >
+                <p className="text-sm font-bold text-leaf-900">Escribinos por WhatsApp</p>
+                <p className="mt-1 text-sm text-slate-600">
+                  Consultá disponibilidad o hacé tu encargo.
+                </p>
+                <div className="mt-3 grid gap-2">
+                  <a
+                    className="rounded-xl border border-leaf-100 px-3 py-2.5 text-sm font-bold text-leaf-800 transition hover:border-leaf-300 hover:bg-leaf-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf-700"
+                    href="https://wa.me/5493585066944"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    WhatsApp: 3585066944
+                  </a>
+                  <a
+                    className="rounded-xl border border-leaf-100 px-3 py-2.5 text-sm font-bold text-leaf-800 transition hover:border-leaf-300 hover:bg-leaf-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf-700"
+                    href="https://wa.me/5493585765628"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    WhatsApp: 3585765628
+                  </a>
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
       </header>
 
