@@ -92,11 +92,8 @@ export default function App() {
     <div className="min-h-screen bg-cream-50 text-slate-900">
       <header className="border-b border-leaf-100 bg-leaf-950 text-white">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-          <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-leaf-100 ring-1 ring-inset ring-white/15">
-            Inventario vivo
-          </span>
-          <h1 className="mt-4 max-w-2xl text-4xl font-black tracking-tight text-balance sm:text-5xl">
-            Catálogo del Vivero
+          <h1 className="max-w-2xl text-4xl font-black tracking-tight text-balance sm:text-5xl">
+            Vivero Julita
           </h1>
           <p className="mt-3 max-w-xl text-base leading-7 text-leaf-100 sm:text-lg">
             Plantas disponibles para llenar tus espacios de verde.
