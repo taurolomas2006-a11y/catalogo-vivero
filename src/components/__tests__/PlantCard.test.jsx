@@ -38,4 +38,25 @@ describe("PlantCard", () => {
 
     expect(screen.getByText(/4\.500,5/)).toBeInTheDocument();
   });
+
+  it.each([
+    ["available", "Stock disponible"],
+    [null, "Stock no disponible"],
+    [4, "Últimas unidades · Stock: 4 unidades"],
+  ])("muestra el estado de stock %s", (stock, expectedLabel) => {
+    render(
+      <PlantCard
+        plant={{
+          category: "Interior",
+          id: "monstera-1",
+          imageUrl: "",
+          name: "Monstera",
+          price: null,
+          stock,
+        }}
+      />,
+    );
+
+    expect(screen.getByText(expectedLabel)).toBeInTheDocument();
+  });
 });

@@ -24,4 +24,20 @@ describe("toPlantInventory", () => {
 
     expect(inventory.map((plant) => plant.price)).toEqual([4500.5, null]);
   });
+
+  it("distingue stock disponible, cantidad y stock no disponible", () => {
+    const inventory = toPlantInventory([
+      { Nombre: "Helecho", Stock: "*" },
+      { Nombre: "Menta", Stock: "4" },
+      { Nombre: "Lavanda", Stock: "" },
+      { Nombre: "Rosa", Stock: "consultar" },
+    ]);
+
+    expect(inventory.map((plant) => plant.stock)).toEqual([
+      "available",
+      4,
+      null,
+      null,
+    ]);
+  });
 });

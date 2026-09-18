@@ -1,6 +1,20 @@
 import { useEffect, useState } from "react";
 
 function getStockStatus(stock) {
+  if (stock === "available") {
+    return {
+      label: "Stock disponible",
+      className: "bg-leaf-50 text-leaf-800 ring-leaf-200",
+    };
+  }
+
+  if (stock === null) {
+    return {
+      label: "Stock no disponible",
+      className: "bg-slate-50 text-slate-600 ring-slate-200",
+    };
+  }
+
   if (stock === 0) {
     return {
       label: "Agotado · 0 unidades",
@@ -94,11 +108,7 @@ export default function PlantCard({ plant }) {
           </p>
         ) : null}
         <p
-          aria-label={`Disponibilidad: ${
-            plant.stock === 0
-              ? "agotado"
-              : `${plant.stock} ${plant.stock === 1 ? "unidad" : "unidades"}`
-          }`}
+          aria-label={`Disponibilidad: ${stockStatus.label}`}
           className={`mt-3 inline-flex rounded-full px-3 py-1.5 text-sm font-bold ring-1 ring-inset ${stockStatus.className}`}
         >
           {stockStatus.label}

@@ -135,7 +135,8 @@ function parsePrice(priceValue) {
 
 /**
  * Normaliza los registros esperados por el catálogo.
- * Las filas sin Nombre se descartan. Stock siempre queda como número >= 0 y
+ * Las filas sin Nombre se descartan. Stock puede ser un número, "available"
+ * cuando la hoja contiene "*", o null cuando está vacío/no es válido.
  * Precio queda en null cuando está vacío o no es válido.
  *
  * @param {Array<Record<string, string>>} rows
@@ -148,11 +149,16 @@ export function toPlantInventory(rows) {
       return plants;
     }
 
-    const parsedStock = Number((row.Stock ?? "").trim());
+    const stockValue = (row.Stock ?? "").trim();
+    const parsedStock = Number(stockValue);
     const stock =
-      Number.isFinite(parsedStock) && parsedStock >= 0
-        ? Math.trunc(parsedStock)
-        : 0;
+      stockValue === "*"
+        ? "available"
+        : stockValue === ""
+          ? null
+        : Number.isFinite(parsedStock) && parsedStock >= 0
+          ? Math.trunc(parsedStock)
+          : null;
 
     plants.push({
       id: `${name.toLocaleLowerCase().replaceAll(" ", "-")}-${index}`,
